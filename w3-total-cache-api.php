@@ -47,7 +47,7 @@ if ( ! defined( 'W3TC_LICENSE_API_URL' ) ) {
 	define( 'W3TC_LICENSE_API_URL', 'https://www.w3-edge.com/' );
 }
 if ( ! defined( 'W3TC_PURCHASE_URL' ) ) {
-	define( 'W3TC_PURCHASE_URL', 'https://www.w3-edge.com/checkout/' );
+	define( 'W3TC_PURCHASE_URL', 'https://www.boldgrid.com/w3-total-cache/' );
 }
 
 // the name of your product. This should match the download name in EDD exactly.

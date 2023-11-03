@@ -129,7 +129,8 @@ class Licensing_Core {
 			'install_date=' . urlencode( $state->get_integer( 'common.install' ) ) .
 			( empty( $data_src ) ? '' : '&data_src=' . urlencode( $data_src ) ) .
 			( empty( $renew_key ) ? '' : '&renew_key=' . urlencode( $renew_key ) ) .
-			( empty( $client_id ) ? '' : '&client_id=' . urlencode( $client_id ) );
+			( empty( $client_id ) ? '' : '&client_id=' . urlencode( $client_id ) ) .
+			'&iframed=1';
 	}
 
 	/**

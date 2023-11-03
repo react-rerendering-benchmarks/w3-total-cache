@@ -392,12 +392,11 @@ function w3tc_lightbox_upgrade(nonce, data_src, renew_key) {
 	if (window.w3tc_ga) {
 		client_id = w3tc_ga_cid;
 	}
-
   	W3tc_Lightbox.open({
 		id: 'w3tc-overlay',
 		close: '',
-		width: 800,
-		height: 350,
+		minWidth: jQuery(window).width() - 100,
+		minHeight: jQuery(window).height() - 100,
 		url: 'admin.php?page=w3tc_dashboard&w3tc_licensing_upgrade&_wpnonce=' +
 		encodeURIComponent(nonce) + '&data_src=' + encodeURIComponent(data_src) +
 		(renew_key ? '&renew_key=' + encodeURIComponent(renew_key) : '') +
@@ -408,19 +407,37 @@ function w3tc_lightbox_upgrade(nonce, data_src, renew_key) {
 		jQuery('.button-primary', lightbox.container).on( 'click', function() {
 			lightbox.close();
 		});
-		jQuery('#w3tc-purchase', lightbox.container).on( 'click', function() {
-			lightbox.close();
-			w3tc_lightbox_buy_plugin(nonce, data_src, renew_key, client_id);
-		});
-		jQuery('#w3tc-purchase-link', lightbox.container).on( 'click', function() {
-			lightbox.close();
 
-			if ( jQuery('#licensing').length ) {
-				jQuery([document.documentElement, document.body]).animate({
-					scrollTop: jQuery('#licensing').offset().top
-				}, 2000);
+		var w3tc_license_listener = function(event) {
+			if (event.origin.substr(event.origin.length - 12) !== ".w3-edge.com")
+				return;
+			var data = event.data.split(' ');
+			if (data[0] === 'license') {
+				// legacy purchase
+				w3tc_lightbox_save_license_key(function() {
+					lightbox.close();
+				});
+			} else if (data[0] === 'v2_license') {
+				// reset default timeout
+				var iframe = document.getElementById('buy_frame');
+				if (iframe.contentWindow && iframe.contentWindow.postMessage)
+					iframe.contentWindow.postMessage('v2_license_accepted', '*');
+
+				lightbox.options.onClose = function() {
+					window.location = window.location + '&refresh';
+				}
+
+				w3tc_lightbox_save_license_key(data[1], nonce, function() {
+					jQuery('#buy_frame').attr('src', data[3]);
+				});
 			}
-		});
+		}
+
+		if (window.addEventListener) {
+			addEventListener("message", w3tc_license_listener, false)
+		} else if (attachEvent) {
+			attachEvent("onmessage", w3tc_license_listener);
+		}
 
 		// Allow for customizations of the "upgrade" overlay specifically.
 		jQuery( '.w3tc-overlay' ).addClass( 'w3tc-overlay-upgrade' );
@@ -428,57 +445,6 @@ function w3tc_lightbox_upgrade(nonce, data_src, renew_key) {
 		lightbox.resize();
 	}
   });
-}
-
-function w3tc_lightbox_buy_plugin(nonce, data_src, renew_key, client_id) {
-	W3tc_Lightbox.open({
-		width: 800,
-		minHeight: 350,
-		maxWidth: jQuery(window).width() - 40,
-		maxHeight: jQuery(window).height() - 40,
-		url: 'admin.php?page=w3tc_dashboard&w3tc_licensing_buy_plugin' +
-			'&_wpnonce=' + encodeURIComponent(nonce) +
-			'&data_src=' + encodeURIComponent(data_src) +
-			(renew_key ? '&renew_key=' + encodeURIComponent(renew_key) : '') +
-			(client_id ? '&client_id=' + encodeURIComponent(client_id) : ''),
-		callback: function(lightbox) {
-			var w3tc_license_listener = function(event) {
-				if (event.origin.substr(event.origin.length - 12) !== ".w3-edge.com")
-					return;
-
-				var data = event.data.split(' ');
-				if (data[0] === 'license') {
-					// legacy purchase
-					w3tc_lightbox_save_license_key(function() {
-						lightbox.close();
-					});
-				} else if (data[0] === 'v2_license') {
-					// reset default timeout
-					var iframe = document.getElementById('buy_frame');
-					if (iframe.contentWindow && iframe.contentWindow.postMessage)
-						iframe.contentWindow.postMessage('v2_license_accepted', '*');
-
-					lightbox.options.onClose = function() {
-						window.location = window.location + '&refresh';
-					}
-
-					w3tc_lightbox_save_license_key(data[1], nonce, function() {
-						jQuery('#buy_frame').attr('src', data[3]);
-					});
-				}
-			}
-
-			if (window.addEventListener) {
-				addEventListener("message", w3tc_license_listener, false)
-			} else if (attachEvent) {
-				attachEvent("onmessage", w3tc_license_listener);
-			}
-
-			jQuery('.button-primary', lightbox.container).on( 'click', function() {
-				lightbox.close();
-			});
-		}
-	});
 }
 
 function w3tc_lightbox_save_license_key(license_key, nonce, callback) {

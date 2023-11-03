@@ -16,13 +16,12 @@ class Licensing_AdminActions {
 	/**
 	 *  test action
 	 */
-	function w3tc_licensing_buy_plugin() {
-		$data_src = $this->param( 'data_src' );
+	public function w3tc_licensing_buy_plugin() {
+		$data_src  = $this->param( 'data_src' );
 		$renew_key = $this->param( 'renew_key' );
 		$client_id = $this->param( 'client_id' );
 
-		$iframe_url = Licensing_Core::purchase_url( $data_src, $renew_key,
-			$client_id );
+		$iframe_url = Licensing_Core::purchase_url( $data_src, $renew_key, $client_id );
 
 		include W3TC_INC_DIR . '/lightbox/purchase.php';
 	}
@@ -37,10 +36,12 @@ class Licensing_AdminActions {
 	/**
 	 * Self test action
 	 */
-	function w3tc_licensing_upgrade() {
-		$data_src = $this->param( 'data_src' );
+	public function w3tc_licensing_upgrade() {
+		$data_src  = $this->param( 'data_src' );
 		$renew_key = $this->param( 'renew_key' );
 		$client_id = $this->param( 'client_id' );
+
+		$iframe_url = Licensing_Core::purchase_url( $data_src, $renew_key, $client_id );
 
 		include W3TC_INC_DIR . '/lightbox/upgrade.php';
 	}
