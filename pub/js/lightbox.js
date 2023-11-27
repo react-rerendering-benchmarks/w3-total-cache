@@ -396,6 +396,7 @@ function w3tc_lightbox_upgrade(nonce, data_src, renew_key) {
 		id: 'w3tc-overlay',
 		close: '',
 		minWidth: jQuery(window).width() - 100,
+		maxWidth: 1200,
 		minHeight: jQuery(window).height() - 100,
 		url: 'admin.php?page=w3tc_dashboard&w3tc_licensing_upgrade&_wpnonce=' +
 		encodeURIComponent(nonce) + '&data_src=' + encodeURIComponent(data_src) +
