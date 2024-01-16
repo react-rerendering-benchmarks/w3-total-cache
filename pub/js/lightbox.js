@@ -393,11 +393,15 @@ function w3tc_lightbox_upgrade(nonce, data_src, renew_key) {
 		client_id = w3tc_ga_cid;
 	}
 
+	var minWidth = jQuery(window).width() - 30;
+	var minHeight = jQuery(window).height() - 30;
+
   	W3tc_Lightbox.open({
 		id: 'w3tc-overlay',
 		close: '',
 		maxWidth: 1000,
-		maxHeight: 500,
+		minWidth: ( minWidth < 1000 ? minWidth : 1000 ),
+		minHeight: ( minHeight < 500 ? minHeight : 500 ),
 		url: 'admin.php?page=w3tc_dashboard&w3tc_licensing_upgrade&_wpnonce=' +
 			encodeURIComponent(nonce) + '&data_src=' + encodeURIComponent(data_src) +
 			(renew_key ? '&renew_key=' + encodeURIComponent(renew_key) : '') +
@@ -431,10 +435,14 @@ function w3tc_lightbox_upgrade(nonce, data_src, renew_key) {
 }
 
 function w3tc_lightbox_buy_plugin(nonce, data_src, renew_key, client_id) {
+	var minWidth = jQuery(window).width() - 30;
+	var minHeight = jQuery(window).height() - 30;
+
 	W3tc_Lightbox.open({
 		id: 'w3tc-overlay',
 		maxWidth: 1000,
-		maxHeight: 700,
+		minWidth: ( minWidth < 1000 ? minWidth : 1000 ),
+		minHeight: ( minHeight < 700 ? minHeight : 700 ),
 		url: 'admin.php?page=w3tc_dashboard&w3tc_licensing_buy_plugin' +
 			'&_wpnonce=' + encodeURIComponent(nonce) +
 			'&data_src=' + encodeURIComponent(data_src) +

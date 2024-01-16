@@ -107,7 +107,14 @@ th.minify-files-add, td.minify-files-add {
 ## Overlays
 ###################
 */
+
+.w3tc-overlay-upgrade,
+.w3tc-overlay-upgrade #w3tc_lightbox_content {
+	//height: auto !important;
+}
+
 .w3tc-overlay {
+	margin: 45px 0 10px;
     background-color: #fff;
 }
 
@@ -495,31 +502,40 @@ padding: 10px 20px 20px 20px;
 	height: 100%;
 }
 
+#w3tc-upgrade #w3tc-upgrade-logo {
+	position: absolute;
+	top: -50px;
+}
+
 .w3tc_upgrade_header {
 	border-radius: 6px 6px 0 0;
 }
 
 .w3tc_upgrade_header p {
+	display: flex;
 	width: 100%;
 	margin: 0;
 	padding: 15px;
-	font-size: 22px;
-	font-weight: 600;
 	box-sizing: border-box;
+	border-radius: 6px 6px 0 0;
 }
 
-.w3tc_upgrade_header span {
-	float: right;
-	font-size: 22px;
-	font-weight: 900;
+.w3tc_upgrade_header_left {
+	float: left;
+	width: 70%;
+	font-size: 18px;
+	font-weight: 600;
+	text-align: left;
 }
 
-.w3tc_upgrade_header span {
+.w3tc_upgrade_header_right {
 	float: right;
-	font-size: 22px;
-	font-weight: 900;
+	width: 30%;
+	font-size: 18px;
+	font-weight: 600;
+	text-align: right;
 }
-/* ../img/w3tc-hero-background.png */
+
 .w3tc_upgrade_content {
 	padding: 15px;
     margin: 0 15px 15px;
@@ -527,12 +543,21 @@ padding: 10px 20px 20px 20px;
 	background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/w3tc-hero-background.png);
 	background-size: cover;
 	background-repeat: no-repeat;
+	background-position: right;
 	color: #ffffff;
+}
+
+.w3tc_upgrade_content .mobile {
+	display: none;
 }
 
 .w3tc_upgrade_content p {
 	position: relative;
 	z-index: 1;
+}
+
+.w3tc_upgrade_content p b {
+	color: #46ACDB;
 }
 
 .w3tc_upgrade_footer {
@@ -584,4 +609,40 @@ padding: 10px 20px 20px 20px;
 .w3tc_overlay_upgrade_header,
 .w3tc-overlay-upgrade .lightbox-close {
 	background-color: #f1f1f1;
+}
+
+@media only screen and (max-device-width: 700px) {
+	.w3tc_upgrade_header p {
+		display: block;
+	}
+
+	.w3tc_upgrade_header_left,
+	.w3tc_upgrade_header_right {
+		font-size: 16px;
+		float: none;
+	}
+
+	.w3tc_upgrade_header p,
+	.w3tc_upgrade_footer {
+		padding: 10px;
+	}
+
+	.w3tc_upgrade_content {
+		padding: 10px;
+		margin: 0 10px 10px;
+	}
+
+	.w3tc_upgrade_content p {
+		margin-bottom: 10px;
+	}
+}
+
+@media only screen and (max-device-width: 480px) {
+	.w3tc_upgrade_content .desktop {
+		display: none;
+	}
+
+    .w3tc_upgrade_content .mobile {
+		display: block;
+	}
 }
