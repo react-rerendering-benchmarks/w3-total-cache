@@ -581,6 +581,15 @@ class PgCache_ContentGrabber {
 				( !$this->_config->get_boolean( 'pgcache.cache.query' ) ||
 				$this->_config->get_string( 'pgcache.engine' ) == 'file_generic' );
 
+			/**
+			 * Filter: Allow override of "pgcache.cache.query", before checking if it's a ReST request.
+			 *
+			 * @since X.X.X
+			 *
+			 * @param bool $should_reject_qs Whether or not to reject query string caching.
+			 */
+			$should_reject_qs .= \apply_filters( 'w3tc_should_reject_qs', $should_reject_qs );
+
 			if ( $should_reject_qs &&
 				$this->_config->get_string( 'pgcache.rest' ) == 'cache' &&
 				Util_Environment::is_rest_request( $this->_request_uri ) ) {
