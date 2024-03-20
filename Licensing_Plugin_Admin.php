@@ -156,10 +156,10 @@ class Licensing_Plugin_Admin {
 
 		$state  = Dispatcher::config_state();
 		$status = $state->get_string( 'license.status' );
-if(1){/*
+
 		if ( defined( 'W3TC_PRO' ) ) {
 		} elseif ( 'no_key' === $status ) {
-		} elseif ( $this->_status_is( $status, 'inactive.expired' ) ) {*/
+		} elseif ( $this->_status_is( $status, 'inactive.expired' ) ) {
 			$message = wp_kses(
 				sprintf(
 					// translators: 1 HTML input button for renewing license.
